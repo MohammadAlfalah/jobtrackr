@@ -1,0 +1,39 @@
+# Run the whole app with:  docker compose up --build
+# Then open http://localhost:8080  (override the port with WEB_PORT=9090 docker compose up)
+services:
+  api:
+    build: ./backend
+    environment:
+      # SQLite file lives on a named volume so data survives restarts.
+      ConnectionStrings__DefaultConnection: "Data Source=/app/data/jobtrackr.db"
+      # Demo signing key — overridable via the JWT_KEY env var (or a .env file) so it
+      # can't accidentally ship to production unchanged. In a real deployment this
+      # comes from a secrets store.
+      Jwt__Key: "${JWT_KEY:-compose-dev-only-secret-key-change-me-min-32-chars}"
+      Jwt__Issuer: "JobTrackr"
+      Jwt__Audience: "JobTrackrClient"
+    volumes:
+      - jobtrackr-data:/app/data
+    healthcheck:
+      # Lets `web` wait until the API has finished starting + migrating, so users
+      # never hit a 502 in the gap between the (instant) static site and the API.
+      test: ["CMD", "curl", "-f", "http://localhost:8080/swagger/v1/swagger.json"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    ports:
+      # Host port is configurable (default 8080) so you can avoid conflicts:
+      #   WEB_PORT=9090 docker compose up
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  jobtrackr-data:

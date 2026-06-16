@@ -1,0 +1,27 @@
+# ---- .NET ----
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
+
+# Local SQLite database files (the schema lives in Migrations/, not here)
+*.db
+*.db-shm
+*.db-wal
+
+# ---- Node / Vite ----
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ---- Environment / secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- Logs / OS ----
+*.log
+.DS_Store
+Thumbs.db
