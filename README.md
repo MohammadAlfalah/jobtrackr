@@ -18,12 +18,9 @@ a typed REST API, token auth, a React SPA, tests, and a containerised dev setup.
 
 ## Screenshots
 
-<!-- Add screenshots / a short GIF here once you run the app (see "Getting started").
-     A dashboard screenshot is the single highest-impact thing for a recruiter. -->
-
 | Dashboard | Add / edit application |
 |---|---|
-| _add `docs/dashboard.png`_ | _add `docs/form.png`_ |
+| ![JobTrackr dashboard](docs/dashboard.png) | ![Add application form](docs/add-form.png) |
 
 ---
 
