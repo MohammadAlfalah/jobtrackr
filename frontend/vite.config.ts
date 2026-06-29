@@ -10,7 +10,7 @@ export default defineConfig({
       // In production the app is served behind nginx, which forwards /api
       // to the backend, so the frontend always calls relative /api/... paths.
       '/api': {
-        target: 'http://localhost:5080',
+        target: 'http://localhost:5077',
         changeOrigin: true,
       },
     },
